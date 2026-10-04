@@ -1,31 +1,24 @@
-"""LetCheck assistant on OpenAI, using the LetCheck MCP server for every figure.
+"""RentCheck Copilot from the command line: the same agent the web app uses (backend/agent.py),
+getting every figure from the RentCheck MCP server.
 
-    pip install openai-agents "mcp[cli]"
-    export OPENAI_API_KEY=...            # never commit this
-    python assistant_openai.py "Is €950 for a 2-bed apartment in Rathmines a scam risk?"
+    pip install -r requirements.txt
+    export OPENAI_API_KEY=...            # or put it in .env; never commit this
+    python mcp_server/assistant_openai.py "Is €950 for a 2-bed apartment in Rathmines a scam risk?"
 """
 import asyncio
-import os
 import sys
 from pathlib import Path
 
-from agents import Agent, Runner
-from agents.mcp import MCPServerStdio
-
-INSTRUCTIONS = """You are LetCheck, helping people in Ireland understand rents and avoid rental scams.
-Use the letcheck tools for every rent figure and quote the quarter it is from. RTB figures are average rents
-agreed in new tenancies, not asking prices. You have no live listings. For scam questions use check_listing and
-repeat the Garda advice: view in person and check the keys before paying; pay traceably; report scams to the
-local Garda station and your bank. Be brief and plain."""
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from backend import agent as copilot  # noqa: E402
 
 
 async def main(question: str):
-    server_py = Path(__file__).with_name("server.py")
-    async with MCPServerStdio(name="letcheck", params={"command": sys.executable, "args": [str(server_py)]},
-                              cache_tools_list=True) as letcheck:
-        agent = Agent(name="LetCheck", instructions=INSTRUCTIONS, mcp_servers=[letcheck],
-                      model=os.getenv("OPENAI_MODEL", "gpt-4.1-mini"))
-        result = await Runner.run(agent, question)
+    ok, why = copilot.available()
+    if not ok:
+        sys.exit(f"RentCheck Copilot is unavailable: {why}")
+    async with copilot.mcp_server() as rentcheck:
+        result = await copilot.Runner.run(copilot.build_agent(rentcheck), copilot.build_input(question, None, None))
         print(result.final_output)
 
 

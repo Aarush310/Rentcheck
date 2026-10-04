@@ -1,7 +1,7 @@
 """Download the RTB Average Monthly Rent Report (CSO table RIQ02, listed on data.gov.ie, CC-BY 4.0)
 and keep only the latest figure for each location x bedrooms x property type.
 
-    python fetch_rtb.py            # writes rtb_latest.csv next to this script (drop it into LetCheck)
+    python fetch_rtb.py            # writes rtb_latest.csv next to this script; then run update_data.py
 
 Standard library only. The full file is large, so it is streamed line by line.
 """
@@ -22,7 +22,7 @@ def qnum(q: str) -> int:
 
 
 def main():
-    req = urllib.request.Request(URL, headers={"User-Agent": "LetCheck/0.1 (Build for Ireland prototype)"})
+    req = urllib.request.Request(URL, headers={"User-Agent": "RentCheck/0.1 (Build for Ireland prototype)"})
     print("Downloading RIQ02 from the CSO (this can take a minute)...")
     with urllib.request.urlopen(req, timeout=300) as r:
         reader = csv.reader(io.TextIOWrapper(r, encoding="utf-8-sig", newline=""))
@@ -48,7 +48,7 @@ def main():
         w.writerows(best.values())
     latest = max(qnum(r[iq]) for r in best.values())
     print(f"Read {n:,} rows. Saved {len(best):,} latest figures (newest quarter {latest // 10} Q{latest % 10}) -> {OUT.name}")
-    print("Now open LetCheck, click 'Load RTB rent data' and drop rtb_latest.csv in.")
+    print("Now run: python update_data.py   (or drop rtb_latest.csv into RentCheck's data dialog)")
 
 
 if __name__ == "__main__":

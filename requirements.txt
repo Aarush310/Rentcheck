@@ -1,2 +1,6 @@
-mcp[cli]
-openai-agents
+# Web app + Copilot API
+starlette>=0.37
+uvicorn>=0.30
+# RentCheck MCP server (tools) and the Copilot agent that calls it
+mcp[cli]>=1.9
+openai-agents>=0.2
