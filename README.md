@@ -1,15 +1,67 @@
-# RentCheck
+<div align="center">
 
-**Know the rent. Spot the risk. Rent smarter.**
+# 🏠 RentCheck
 
-RentCheck helps people in Ireland make safer rental decisions by combining official RTB rental data, rental scam
-warning-sign detection, geographic rent intelligence and an explainable AI assistant. It answers three questions:
+### Know the rent. Spot the risk. Rent smarter.
 
-1. **Is this rental listing suspicious?** Deterministic checks based on Garda warning signs, quoting the exact words that triggered each one.
-2. **Is the asking rent reasonable?** The asking rent against the RTB average for the same area, size and property type, with the quarter shown.
-3. **Where should I look instead?** A rent map with an affordability mode, nearby alternatives and a Copilot that reasons over the same data.
+Safer rental decisions in Ireland: official RTB rent data, rental-scam warning signs,<br/>
+a rent map with an affordability mode, and an AI Copilot that shows its sources.
 
-Built at Build for Ireland, Dogpatch Labs, 4 October 2026.
+<p>
+  <img alt="Python" src="https://img.shields.io/badge/Python-3-1f2937?logo=python&logoColor=FFD43B" />
+  <img alt="MCP server" src="https://img.shields.io/badge/MCP-5%20tools-1f2937" />
+  <img alt="OpenAI Agents SDK" src="https://img.shields.io/badge/OpenAI-Agents%20SDK-1f2937?logo=openai&logoColor=white" />
+  <img alt="Data" src="https://img.shields.io/badge/data-RTB%20%2F%20CSO%20RIQ02-0f766e" />
+  <img alt="No build step" src="https://img.shields.io/badge/frontend-no%20build%20step-0f766e" />
+  <img alt="Parity tests" src="https://img.shields.io/badge/parity%20tests-16%2F16-16a34a" />
+</p>
+
+**Built in one day at Build for Ireland** (OpenAI × Give(a)Go × Dogpatch Labs, Dublin AI Week)<br/>
+Dogpatch Labs, Dublin · 4 October 2026
+
+<br/>
+
+<a href="demo/rentcheck-demo.mp4">
+  <img src="docs/media/demo-check.gif" width="760" alt="RentCheck flags a suspicious Rathmines listing and quotes the exact warning signs" />
+</a>
+
+**[▶ Watch the full 90-second demo](demo/rentcheck-demo.mp4)**
+
+</div>
+
+---
+
+## The problem
+
+Rental scams are rising in Ireland. Gardaí reported **230+ cases and €400,000+ lost** between January and July 2026. Renters under pressure in a tight market see a listing that looks too good to be true, and have no quick way to check it before they send money.
+
+RentCheck answers three questions in seconds:
+
+| | |
+|---|---|
+| 🚩 **Is this listing suspicious?** | Deterministic checks based on Garda warning signs, highlighting the exact words that triggered each one. |
+| 💶 **Is the rent reasonable?** | The asking rent against the RTB average for the same area, size and property type, with the quarter shown. |
+| 🗺️ **Where should I look instead?** | A rent map with a budget mode, nearby alternatives, and a Copilot that reasons over the same data. |
+
+## See it in action
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/listing-check.png" alt="Listing check with highlighted warning signs and RTB benchmark" /><br/><sub><b>Spot the risk.</b> Every warning sign is quoted from the ad, and the rent is compared with the RTB benchmark.</sub></td>
+    <td width="50%"><img src="docs/rent-map.png" alt="Rent intelligence map" /><br/><sub><b>Know the rent.</b> RTB averages around the area. Dots are approximate area centres.</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/affordability.png" alt="Affordability mode with a monthly budget" /><br/><sub><b>Budget mode.</b> Areas within, close to, or above your monthly budget.</sub></td>
+    <td><img src="docs/media/copilot.png" alt="RentCheck Copilot answering with tool-backed figures" /><br/><sub><b>Ask the Copilot.</b> Answers come from RentCheck's tools and RTB data, with sources shown.</sub></td>
+  </tr>
+</table>
+
+<details>
+<summary><b>More demo clips</b></summary>
+<br/>
+<p><b>Rent map and budget mode</b><br/><img src="docs/media/demo-map.gif" width="760" alt="Rent map switching to affordability mode" /></p>
+<p><b>Copilot over MCP</b><br/><img src="docs/media/demo-copilot.gif" width="760" alt="Copilot suggesting cheaper nearby areas" /></p>
+</details>
 
 ## Run
 
@@ -90,6 +142,17 @@ Claude Desktop config: `{"mcpServers": {"rentcheck": {"command": "python", "args
 - RTB figures are agreed rents, usually below asking prices, so a listing far below the RTB average is a strong warning and "within budget" on the map is a floor, not a promise.
 - No RTB figures exist for rooms in shared homes, and the RTB withholds small samples, so some areas lack some sizes.
 - Grounded mode understands a fixed set of questions (area rents, budget search, comparisons, price checks, listing risk, data questions). Free-form questions need the AI mode.
+
+## Team
+
+Built at **Build for Ireland**, Dublin AI Week, by:
+
+| Aarush Prasad | Jenil Parmar | Dheeraj Chavan |
+|:---:|:---:|:---:|
+
+## Thanks
+
+To **OpenAI**, **Give(a)Go** and **Dogpatch Labs** for running Build for Ireland, and to **Dublin AI Week** for the wider programme.
 
 ## Credits
 
