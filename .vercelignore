@@ -1,0 +1,7 @@
+mcp_server/
+backend/
+tests/
+demo/
+docs/
+*.py
+requirements.txt
